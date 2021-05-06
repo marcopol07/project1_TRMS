@@ -55,6 +55,16 @@ class EmployeeInformationDAO(ModelDAO):
 
         return ""
 
+    @staticmethod
+    def update_reimbursement(self, password, change):
+        sql = "UPDATE reimbursement_funds_remaining=%s WHERE password=%s RETURNING *"
+
+        cursor = connection.cursor()
+        cursor.execute(sql, (change, password))
+        connection.commit()
+
+        return ""
+
     def delete_record(self, password):
         sql = "DELETE FROM employee_information WHERE password=%s"
 

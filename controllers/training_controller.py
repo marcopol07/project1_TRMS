@@ -9,8 +9,9 @@ def route(app):
     @app.route("/trainings", methods=["POST"])
     def post_training():
         try:
+            department_name = request.json["department"]
             training = Training.json_parse(request.json)
-            training = TrainingService.create_training(training)
+            training = TrainingService.create_training(training, department_name)
             return jsonify(training.json()), 201
         except KeyError:
             return "Please fill out all required fields.", 400
@@ -46,9 +47,23 @@ def route(app):
         except ResourceNotFound as r:
             return r.message, 404
 
+    @app.route("/trainings/<case_id>/<level>", methods=["PUT"])
+    def update_approvals(case_id, level):
+        return TrainingService.update_approvals(case_id, level), 200
+
+    @app.route("/trainings/<case_id>/<value>/<add>", methods=["PUT"])
+    def update_reimbursements(case_id, value, add):
+        return TrainingService.update_reimbursement_amount(case_id, value, add), 200
+
+    @app.route("/trainings/query/<case_id>", methods=["PUT"])
+    def update_query(case_id):
+        training = Training.json_parse(request.json)
+        training.case_id = case_id
+        return TrainingService.update_query(training), 200
+
     @app.route("/trainings/<case_id>", methods=["DELETE"])
     def delete_training(case_id):
         try:
-            return TrainingService.delete_training(case_id)
+            return TrainingService.delete_training(case_id), 204
         except KeyError:
             return "No training found.", 400

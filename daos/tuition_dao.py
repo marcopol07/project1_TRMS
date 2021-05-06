@@ -13,18 +13,18 @@ class TuitionDAO(ModelDAO):
                              tuition.grade_cutoff, tuition.reimbursement_percent))
         connection.commit()
         record = cursor.fetchone()
-        return TuitionType(record[0], record[1], record[2], record[3])
+        return TuitionType(record[0], record[1], record[2], float(record[3]))
 
     def get_all_records(self):
         sql = "SELECT * FROM tuition_types"
-        cursor = connection.cursor
+        cursor = connection.cursor()
         cursor.execute(sql)
         records = cursor.fetchall()
 
         tuitions_list = []
         for record in records:
-            tuition = TuitionType(record[0], record[1], record[2], record[3])
-            tuitions_list.append(tuition)
+            tuition = TuitionType(record[0], record[1], record[2], float(record[3]))
+            tuitions_list.append(tuition.json())
 
         return tuitions_list
 
@@ -36,7 +36,7 @@ class TuitionDAO(ModelDAO):
         record = cursor.fetchone()
 
         if record:
-            return TuitionType(record[0], record[1], record[2], record[3])
+            return TuitionType(record[0], record[1], record[2], float(record[3]))
         else:
             raise ResourceNotFound(f"Tuition by name {tuition_name} not found.")
 

@@ -10,7 +10,7 @@ class TuitionType:
             "tuitionName": self.tuition_name,
             "gradingFormat": self.grading_format,
             "gradeCutoff": self.grade_cutoff,
-            "reimbursementPercent": self.reimbursement_percent
+            "reimbursementPercent": float(self.reimbursement_percent)
         }
 
     def __repr__(self):
