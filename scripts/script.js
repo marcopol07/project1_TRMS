@@ -47,6 +47,7 @@ function verifyPassword(username) {
 }
 
 function getUserPermissions(username, password, userInfo) {
+    document.title = `${userInfo.firstName} Dashboard`
     let urlBase = "http://127.0.0.1:5000/permissions/"
     let positionName = userInfo.positionName
     let xhttp = new XMLHttpRequest()
@@ -98,8 +99,7 @@ function generateToDoList(username, password, userInfo, permissions, formList) {
 }
 
 function createUserDashboard(username, password, userInfo, permissions, toDoList, pendingList) {
-    document.getElementById("welcome").innerHTML = `Welcome to your dashboard, ${userInfo.firstName}. 
-                                                    You currently have $${userInfo.reimbursementFundsRemaining} left for training reimbursement.`
+    document.getElementById("welcome").innerHTML = `Welcome to your dashboard, ${userInfo.firstName}.`
     document.getElementById("userInput").remove()
     document.getElementById("submitButton").innerHTML = "Sign Out"
     document.getElementById("submitButton").setAttribute("onclick", "reloadPage()")
@@ -108,7 +108,7 @@ function createUserDashboard(username, password, userInfo, permissions, toDoList
     document.getElementById("toDoHeader").innerHTML = "Forms requiring your attention:"
     generateToDoTableBody(toDoTable, toDoList, permissions)
     generateToDoTableHead(toDoTable, permissions)
-    document.getElementById("pendingHeader").innerHTML = "Forms pending approval:"
+    document.getElementById("pendingHeader").innerHTML = "Forms submitted:"
     generatePendingTableBody(pendingTable, pendingList)
     generatePendingTableHead(pendingTable)
     generateFormSubmission(userInfo)
