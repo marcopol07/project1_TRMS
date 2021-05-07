@@ -34,5 +34,6 @@ To use this application, you will need the following:
 > https://github.com/marcopol07/project1_TRMS.git
 3. Once cloned, paste into your target directory.
 4. Set up the db_connection.py file set up to access an AWS platform database.
+5. Make sure Flask and psycopg2 are installed to your venv using pip install.
 
 Once this is all set up, run app.py and you should be able to access the Web Page via frontend.html.
